@@ -2,12 +2,14 @@
   "name": "subgraph",
   "license": "UNLICENSED",
   "scripts": {
+    "dev": "nodemon --exec 'npm run codegen && npm run deploy-local' --ext 'graphql,yaml,ts' --ignore './generated/' --ignore build/",
+    "local-startup": "npm run codegen && npm run create-local",
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ The-Well-BC/subgraph",
     "create-local": "graph create --node http://localhost:8020/ The-Well-BC/subgraph",
     "remove-local": "graph remove --node http://localhost:8020/ The-Well-BC/subgraph",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 The-Well-BC/subgraph"
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5002 The-Well-BC/subgraph"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.20.0",

@@ -1,72 +1,38 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt, BigDecimal, Bytes, ethereum } from '@graphprotocol/graph-ts'
+import { log } from '@graphprotocol/graph-ts';
+
+import { TheWellNFT } from "../generated/schema";
 import {
-  TheWellNFT,
-  Approval,
-  ApprovalForAll,
-  PayeeAdded,
-  PaymentReceived,
-  PaymentReleased,
-  TokenPrice,
-  Transfer
+    Approval,
+    ApprovalForAll,
+    MintNFT,
+    PayeeAdded,
+    PaymentReceived,
+    PaymentReleased,
+    TokenPrice,
+    Transfer,
+    TheWellNFT as TheWellNFTContract 
 } from "../generated/TheWellNFT/TheWellNFT"
-import { ExampleEntity } from "../generated/schema"
 
-export function handleApproval(event: Approval): void {
-  // Entities can be loaded from the store using a string ID; this ID
-  // needs to be unique across all entities of the same type
-  let entity = ExampleEntity.load(event.transaction.from.toHex())
 
-  // Entities only exist after they have been saved to the store;
-  // `null` checks allow to create entities on demand
-  if (entity == null) {
-    entity = new ExampleEntity(event.transaction.from.toHex())
+export function handleMintNFT(event: MintNFT): void {
+    log.debug('Log by Tolu: Block number: {}, block hash: {}, transaction hash: {}', [
+        event.block.number.toString(), // "47596000"
+        event.block.hash.toHexString(), // "0x..."
+        event.transaction.hash.toHexString(), // "0x..."
+    ])
+    // Entities can be loaded from the store using a string ID; this ID
+    // needs to be unique across all entities of the same type
+    let nft = new TheWellNFT(event.params._tokenID.toHex())
 
-    // Entity fields can be set using simple assignments
-    entity.count = BigInt.fromI32(0)
-  }
+    // Set content Hash and URI
+    let contract = TheWellNFTContract.bind(event.address)
+    nft.contentHash = event.params._tokenURI;
+    nft.contentURI = contract.tokenURI(event.params._tokenID);
 
-  // BigInt and BigDecimal math are supported
-  entity.count = entity.count + BigInt.fromI32(1)
+    nft.creators = event.params._creators as Bytes[];
 
-  // Entity fields can be set based on event parameters
-  entity.owner = event.params.owner
-  entity.approved = event.params.approved
-
-  // Entities can be written to the store with `.save()`
-  entity.save()
-
-  // Note: If a handler doesn't require existing field values, it is faster
-  // _not_ to load the entity from the store. Instead, create it fresh with
-  // `new Entity(...)`, set the fields that should be updated and save the
-  // entity back to the store. Fields that were not set or unset remain
-  // unchanged, allowing for partial updates to be applied.
-
-  // It is also possible to access smart contracts from mappings. For
-  // example, the contract that has emitted the event can be connected to
-  // with:
-  //
-  // let contract = Contract.bind(event.address)
-  //
-  // The following functions can then be called on this contract to access
-  // state variables and other data:
-  //
-  // - contract.balanceOf(...)
-  // - contract.getApproved(...)
-  // - contract.getTokenReleaseTime(...)
-  // - contract.isApprovedForAll(...)
-  // - contract.lockupPeriodOver(...)
-  // - contract.name(...)
-  // - contract.ownerOf(...)
-  // - contract.payee(...)
-  // - contract.payeeDetails(...)
-  // - contract.released(...)
-  // - contract.shares(...)
-  // - contract.supportsInterface(...)
-  // - contract.symbol(...)
-  // - contract.tokenCreators(...)
-  // - contract.tokenURI(...)
-  // - contract.totalReleased(...)
-  // - contract.totalShares(...)
+    nft.save()
 }
 
 export function handleApprovalForAll(event: ApprovalForAll): void {}
