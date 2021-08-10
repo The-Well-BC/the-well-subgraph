@@ -1,8 +1,46 @@
-type TheWellNFT @entity {
+type NFT @entity {
   id: ID!
-  contentHash: String! # NFT URI
-  contentURI: String!
-  "NFT URI"
-  creators: [Bytes!]! # addresses
+
+  "The sha256 hash of the NFT's metadata"
+  mediaHash: String! 
+
+  "The uri of the NFT's media"
+  mediaURI: String!
+
+  "The sha256 hash of the NFT's metadata"
+  metadataHash: String!
+
+  "The uri of the NFT's metadata"
+  metadataURI: String!
+
+  "Array of NFT creators (collaborators). 'Owner' artist is always the first address"
+  creators: [User!]
+
   price: BigInt
+
+  createdAtTimestamp: BigInt
+}
+
+type User @entity {
+  "Ethereum address of the user"
+  id: ID!
+
+  "NFTs the user created"
+  creations: [NFT!] @derivedFrom(field: "creators")
+
+  "NFTs the user owns"
+  collection: [NFT!]
+}
+
+
+type Auction @entity {
+  id: ID!
+
+  nft: NFT
+}
+
+type Sale @entity {
+  id: ID!
+
+  nft: NFT
 }

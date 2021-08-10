@@ -1,7 +1,9 @@
-import { BigInt, BigDecimal, Bytes, ethereum } from '@graphprotocol/graph-ts'
+import { BigInt, BigDecimal, Bytes, Address, ethereum } from '@graphprotocol/graph-ts'
 import { log } from '@graphprotocol/graph-ts';
 
-import { TheWellNFT } from "../generated/schema";
+import { findOrCreateUser } from './helpers';
+import { NFT, User } from "../generated/schema";
+
 import {
     Approval,
     ApprovalForAll,
@@ -16,21 +18,34 @@ import {
 
 
 export function handleMintNFT(event: MintNFT): void {
-    log.debug('Log by Tolu: Block number: {}, block hash: {}, transaction hash: {}', [
-        event.block.number.toString(), // "47596000"
-        event.block.hash.toHexString(), // "0x..."
-        event.transaction.hash.toHexString(), // "0x..."
-    ])
     // Entities can be loaded from the store using a string ID; this ID
     // needs to be unique across all entities of the same type
-    let nft = new TheWellNFT(event.params._tokenID.toHex())
+    let nft = new NFT(event.params._tokenID.toHex())
 
     // Set content Hash and URI
     let contract = TheWellNFTContract.bind(event.address)
-    nft.contentHash = event.params._tokenURI;
-    nft.contentURI = contract.tokenURI(event.params._tokenID);
+    nft.mediaHash = event.params._contentHash;
+    nft.mediaURI = contract.tokenURI(event.params._tokenID);
 
-    nft.creators = event.params._creators as Bytes[];
+    nft.metadataHash = contract.tokenURI(event.params._tokenID);
+    nft.metadataURI = contract.tokenURI(event.params._tokenID);
+
+    let creatorArr = <string[]>[];
+
+    let a: Array<Address> = event.params._creators;
+
+    for(let i = 0; i < a.length; i++) {
+
+        let c: User = findOrCreateUser(
+            a[i].toHexString()
+        );
+
+        creatorArr.push(c.id);
+    }
+
+    nft.creators = creatorArr;
+
+    nft.createdAtTimestamp = event.block.timestamp;
 
     nft.save()
 }
