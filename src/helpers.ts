@@ -3,8 +3,9 @@ import { User } from '../generated/schema';
 export function findOrCreateUser(id: string): User {
     let user = User.load(id)
 
-    if (user == null) {
+    if (!user) {
         user = new User(id)
+        user.numberOfCreations = 0;
         user.save()
     }
 

@@ -7,57 +7,64 @@ import { NFT, User } from "../generated/schema";
 import {
     Approval,
     ApprovalForAll,
-    MintNFT,
-    PayeeAdded,
-    PaymentReceived,
-    PaymentReleased,
-    TokenPrice,
     Transfer,
     TheWellNFT as TheWellNFTContract 
 } from "../generated/TheWellNFT/TheWellNFT"
 
+// changetype<TheWellNFTContract>(TheWellNFT);
 
-export function handleMintNFT(event: MintNFT): void {
+export function handleNFTransfer(event: Transfer): void {
     // Entities can be loaded from the store using a string ID; this ID
     // needs to be unique across all entities of the same type
-    let nft = new NFT(event.params._tokenID.toHex())
+    let tokenID = event.params.tokenId;
+    let nft = new NFT(tokenID.toHex())
 
     // Set content Hash and URI
     let contract = TheWellNFTContract.bind(event.address)
-    nft.mediaHash = event.params._contentHash;
-    nft.mediaURI = contract.tokenURI(event.params._tokenID);
 
-    nft.metadataHash = contract.tokenURI(event.params._tokenID);
-    nft.metadataURI = contract.tokenURI(event.params._tokenID);
+    const zeroAddress = '0x0000000000000000000000000000000000000000';
 
-    let creatorArr = <string[]>[];
+    log.info('To Address: {}, from address: {}, zero Address: {}', [event.params.to.toHexString(), event.params.from.toHexString(), zeroAddress]);
 
-    let a: Array<Address> = event.params._creators;
+    if(event.params.from.toHexString() == zeroAddress) {
+        nft.mediaURI = contract.tokenMediaURI(tokenID);
+        nft.metadataURI = contract.tokenURI(tokenID);
 
-    for(let i = 0; i < a.length; i++) {
+        let creatorArr = <string[]>[];
 
-        let c: User = findOrCreateUser(
-            a[i].toHexString()
-        );
+        let a: Array<Address> = contract.tokenCreators(tokenID);
 
-        creatorArr.push(c.id);
+        for(let i = 0; i < a.length; i++) {
+            let c: User = findOrCreateUser(
+                a[i].toHexString()
+            );
+
+            // log.debug('number of creations for creator', [c.numberOfCreations.toString()])
+            c.numberOfCreations++;
+            c.save()
+
+            creatorArr.push(c.id);
+        }
+
+        nft.creators = creatorArr;
+
+        log.debug('tokenid', [tokenID.toHexString()])
+        nft.owner = event.params.to.toHexString();
+
+        /*
+    if(!nft.collectors)
+        nft.collectors = <string[]>[];
+
+    let collector: User = findOrCreateUser(event.params.to.toHexString());
+    nft.collectors.push(collector.id);
+         */
+
+        nft.createdAtTimestamp = event.block.timestamp;
     }
-
-    nft.creators = creatorArr;
-
-    nft.createdAtTimestamp = event.block.timestamp;
 
     nft.save()
 }
 
 export function handleApprovalForAll(event: ApprovalForAll): void {}
-
-export function handlePayeeAdded(event: PayeeAdded): void {}
-
-export function handlePaymentReceived(event: PaymentReceived): void {}
-
-export function handlePaymentReleased(event: PaymentReleased): void {}
-
-export function handleTokenPrice(event: TokenPrice): void {}
 
 export function handleTransfer(event: Transfer): void {}
