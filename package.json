@@ -9,7 +9,6 @@
     "prepare-mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml",
     "deploy-mainnet": "graph deploy --studio the-well",
     "deploy-mainnet:legacy": "graph deploy The-Well-BC/the-well --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
-    "deploy-legacy-backup": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ The-Well-BC/the-well",
     "prepare-local": "mustache config/local.json subgraph.template.yaml > subgraph.yaml",
     "local-startup": "npm run codegen && npm run create-local",
     "create-local": "graph create --node http://localhost:8020/ the-well",
