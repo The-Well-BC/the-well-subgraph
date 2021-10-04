@@ -1,5 +1,5 @@
 {
-  "name": "subgraph",
+  "name": "the-well",
   "license": "UNLICENSED",
   "scripts": {
     "dev": "npm run prepare-local && npm run create-local && nodemon --exec 'npm run codegen && npm run deploy-local' --ext 'graphql,yaml,ts' --ignore './generated/' --ignore build/",
@@ -7,14 +7,14 @@
     "build": "graph build",
     "prepare-ropsten": "mustache config/ropsten.json subgraph.template.yaml > subgraph.yaml",
     "prepare-mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml",
-    "deploy-mainnet": "graph deploy --studio subgraph",
-    "deploy-mainnet:legacy": "graph deploy The-Well-BC/subgraph --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
-    "deploy-legacy-backup": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ The-Well-BC/subgraph",
+    "deploy-mainnet": "graph deploy --studio the-well",
+    "deploy-mainnet:legacy": "graph deploy The-Well-BC/the-well --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy-legacy-backup": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ The-Well-BC/the-well",
     "prepare-local": "mustache config/local.json subgraph.template.yaml > subgraph.yaml",
     "local-startup": "npm run codegen && npm run create-local",
-    "create-local": "graph create --node http://localhost:8020/ subgraph",
-    "remove-local": "graph remove --node http://localhost:8020/ subgraph",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5002 subgraph"
+    "create-local": "graph create --node http://localhost:8020/ the-well",
+    "remove-local": "graph remove --node http://localhost:8020/ the-well",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5002 the-well"
   },
   "dependencies": {
     "@graphprotocol/graph-ts": "^0.22.1",
