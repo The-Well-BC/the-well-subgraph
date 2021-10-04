@@ -2,21 +2,27 @@ specVersion: 0.0.2
 schema:
   file: ./schema.graphql
 dataSources:
+  # - kind: ethereum/contract
+  #  name: NFTMarketplace
+  #  network: mainnet
+  #  source:
+  #    address: ""
+  #    abi:
+
   - kind: ethereum/contract
     name: TheWellNFT
     network: mainnet
     source:
-      address: "0xDAe1a91322D0358A64044E5589F875215f6db3B4"
+      address: "{{nftAddress}}"
       abi: TheWellNFT
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - NFT
         - Approval
         - ApprovalForAll
-        - MintNFT
         - PayeeAdded
         - PaymentReceived
         - PaymentReleased
@@ -30,16 +36,6 @@ dataSources:
           handler: handleApproval
         - event: ApprovalForAll(indexed address,indexed address,bool)
           handler: handleApprovalForAll
-        - event: MintNFT(uint256,string,address[])
-          handler: handleMintNFT
-        - event: PayeeAdded(uint256,address,uint256)
-          handler: handlePayeeAdded
-        - event: PaymentReceived(uint256,address,uint256)
-          handler: handlePaymentReceived
-        - event: PaymentReleased(uint256,address,uint256)
-          handler: handlePaymentReleased
-        - event: TokenPrice(uint256,uint256)
-          handler: handleTokenPrice
         - event: Transfer(indexed address,indexed address,indexed uint256)
-          handler: handleTransfer
+          handler: handleNFTransfer
       file: ./src/mapping.ts
