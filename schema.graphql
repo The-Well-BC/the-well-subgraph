@@ -1,4 +1,4 @@
-type NFT @entity {
+type Nft @entity {
   id: ID!
 
   "The uri of the NFT's media"
