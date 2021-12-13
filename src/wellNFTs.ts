@@ -65,6 +65,8 @@ export function handleNFTransfer(event: Transfer): void {
     nft.save()
 }
 
+export function handleApproval(event: ApprovalForAll): void {}
+
 export function handleApprovalForAll(event: ApprovalForAll): void {}
 
 export function handleTransfer(event: Transfer): void {}
