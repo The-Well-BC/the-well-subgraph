@@ -14,19 +14,19 @@ import {
 // changetype<TheWellNFTContract>(TheWellNFT);
 
 export function handleNFTransfer(event: Transfer): void {
-    // Entities can be loaded from the store using a string ID; this ID
-    // needs to be unique across all entities of the same type
-    let tokenID = event.params.tokenId;
-    let nft = new Nft(tokenID.toHex())
-
-    // Set content Hash and URI
-    let contract = TheWellNFTContract.bind(event.address)
-
     const zeroAddress = '0x0000000000000000000000000000000000000000';
 
     log.info('To Address: {}, from address: {}, zero Address: {}', [event.params.to.toHexString(), event.params.from.toHexString(), zeroAddress]);
 
     if(event.params.from.toHexString() == zeroAddress) {
+        // Entities can be loaded from the store using a string ID; this ID
+        // needs to be unique across all entities of the same type
+        let tokenID = event.params.tokenId;
+        let nft = new Nft(tokenID.toHex())
+
+        // Set content Hash and URI
+        let contract = TheWellNFTContract.bind(event.address)
+
         nft.mediaURI = contract.tokenMediaURI(tokenID);
         nft.metadataURI = contract.tokenURI(tokenID);
 
@@ -60,9 +60,9 @@ export function handleNFTransfer(event: Transfer): void {
          */
 
         nft.createdAtTimestamp = event.block.timestamp;
-    }
 
-    nft.save()
+        nft.save()
+    }
 }
 
 export function handleApproval(event: Approval): void {}
