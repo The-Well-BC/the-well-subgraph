@@ -2,7 +2,7 @@ import { BigInt, BigDecimal, Bytes, Address, ethereum } from '@graphprotocol/gra
 import { log } from '@graphprotocol/graph-ts';
 
 import { findOrCreateUser } from './helpers';
-import { NFT, User } from "../generated/schema";
+import { Nft, User } from "../generated/schema";
 
 import {
     Approval,
@@ -17,7 +17,7 @@ export function handleNFTransfer(event: Transfer): void {
     // Entities can be loaded from the store using a string ID; this ID
     // needs to be unique across all entities of the same type
     let tokenID = event.params.tokenId;
-    let nft = new NFT(tokenID.toHex())
+    let nft = new Nft(tokenID.toHex())
 
     // Set content Hash and URI
     let contract = TheWellNFTContract.bind(event.address)
@@ -65,7 +65,7 @@ export function handleNFTransfer(event: Transfer): void {
     nft.save()
 }
 
-export function handleApproval(event: ApprovalForAll): void {}
+export function handleApproval(event: Approval): void {}
 
 export function handleApprovalForAll(event: ApprovalForAll): void {}
 

@@ -2,7 +2,7 @@ import { BigInt, BigDecimal, Bytes, Address, ethereum } from '@graphprotocol/gra
 import { log } from '@graphprotocol/graph-ts';
 
 import { findOrCreateUser } from './helpers';
-import { NFT, User } from "../generated/schema";
+import { Nft, User } from "../generated/schema";
 
 import {
     UpdateSubgraph,
@@ -22,7 +22,8 @@ export function handleUpdate(event: UpdateSubgraph): void {
 
         while(tokenExists) {
             const idStr:BigInt = BigInt.fromI32(tokenID);
-            const nft = new NFT(tokenID.toString())
+
+            const nft = new Nft(tokenID.toString())
             // Set content Hash and URI
             let contract = TheWellNFTContract.bind(event.address)
 
