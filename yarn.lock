@@ -9,6 +9,22 @@
   dependencies:
     "assemblyscript" "0.19.10"
 
+"@graphprotocol/graph-ts@^0.24.1":
+  "integrity" "sha512-2vU4m5ZPQIqMlMce/z5vmOtGHRlRmcRhMfemS3NIwxCSxSBGVnX2zb7QBTzzdQKGwsAZdbz6V0okkOtvohELfQ=="
+  "resolved" "https://registry.npmjs.org/@graphprotocol/graph-ts/-/graph-ts-0.24.1.tgz"
+  "version" "0.24.1"
+  dependencies:
+    "assemblyscript" "0.19.10"
+
+"assemblyscript@^0.19.20":
+  "integrity" "sha512-D77X+xNB/PklGQI72DxvssHCviOadktgwpmErq/lNPfQ0wWW6EWlEcu4k2fjuAaGuy9EH01bZ+u0AhIfQrN8rQ=="
+  "resolved" "https://registry.npmjs.org/assemblyscript/-/assemblyscript-0.19.21.tgz"
+  "version" "0.19.21"
+  dependencies:
+    "binaryen" "102.0.0-nightly.20211028"
+    "long" "^5.2.0"
+    "source-map-support" "^0.5.20"
+
 "assemblyscript@0.19.10":
   "integrity" "sha512-HavcUBXB3mBTRGJcpvaQjmnmaqKHBGREjSPNsIvnAk2f9dj78y4BkMaSSdvBQYWcDDzsHQjyUC8stICFkD1Odg=="
   "resolved" "https://registry.npmjs.org/assemblyscript/-/assemblyscript-0.19.10.tgz"
@@ -22,12 +38,48 @@
   "resolved" "https://registry.npmjs.org/binaryen/-/binaryen-101.0.0-nightly.20210723.tgz"
   "version" "101.0.0-nightly.20210723"
 
+"binaryen@102.0.0-nightly.20211028":
+  "integrity" "sha512-GCJBVB5exbxzzvyt8MGDv/MeUjs6gkXDvf4xOIItRBptYl0Tz5sm1o/uG95YK0L0VeG5ajDu3hRtkBP2kzqC5w=="
+  "resolved" "https://registry.npmjs.org/binaryen/-/binaryen-102.0.0-nightly.20211028.tgz"
+  "version" "102.0.0-nightly.20211028"
+
+"buffer-from@^1.0.0":
+  "integrity" "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="
+  "resolved" "https://registry.npmjs.org/buffer-from/-/buffer-from-1.1.2.tgz"
+  "version" "1.1.2"
+
 "long@^4.0.0":
   "integrity" "sha512-XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA=="
   "resolved" "https://registry.npmjs.org/long/-/long-4.0.0.tgz"
   "version" "4.0.0"
 
+"long@^5.2.0":
+  "integrity" "sha512-9RTUNjK60eJbx3uz+TEGF7fUr29ZDxR5QzXcyDpeSfeH28S9ycINflOgOlppit5U+4kNTe83KQnMEerw7GmE8w=="
+  "resolved" "https://registry.npmjs.org/long/-/long-5.2.0.tgz"
+  "version" "5.2.0"
+
+"matchstick-as@^0.2.1":
+  "integrity" "sha512-lqP+IZDNMrZwU0PCd+xHbqkM8Tpd7j5vaM42A53g9Cqr/cAM+fS0hTsGYklcsqH0gZ6EPBvstfpokBPGW2F2eg=="
+  "resolved" "https://registry.npmjs.org/matchstick-as/-/matchstick-as-0.2.1.tgz"
+  "version" "0.2.1"
+  dependencies:
+    "@graphprotocol/graph-ts" "^0.24.1"
+    "assemblyscript" "^0.19.20"
+
 "mustache@^4.2.0":
   "integrity" "sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ=="
   "resolved" "https://registry.npmjs.org/mustache/-/mustache-4.2.0.tgz"
   "version" "4.2.0"
+
+"source-map-support@^0.5.20":
+  "integrity" "sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w=="
+  "resolved" "https://registry.npmjs.org/source-map-support/-/source-map-support-0.5.21.tgz"
+  "version" "0.5.21"
+  dependencies:
+    "buffer-from" "^1.0.0"
+    "source-map" "^0.6.0"
+
+"source-map@^0.6.0":
+  "integrity" "sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g=="
+  "resolved" "https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz"
+  "version" "0.6.1"

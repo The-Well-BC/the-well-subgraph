@@ -17,6 +17,8 @@ dataSources:
       abis:
         - name: SubgraphUpdater
           file: ./abis/SubgraphUpdater.json
+        - name: TheWellNFT
+          file: ./abis/TheWellNFT.json
       eventHandlers:
         - event: UpdateSubgraph(string,string[])
           handler: handleUpdate
